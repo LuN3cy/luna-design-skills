@@ -1,0 +1,508 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>iPhone &amp; Google · Computational Photography Timeline</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#f4efe6;
+    --fg:#1a1a1a;
+    --muted:#6e6a5f;
+    --accent:#c8462c;
+    --rule:#c9c1ad;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;background:var(--bg);color:var(--fg);}
+  body{
+    font-family:'JetBrains Mono','IBM Plex Mono',ui-monospace,monospace;
+    font-size:14px;
+    line-height:1.7;
+    font-weight:400;
+    letter-spacing:0;
+    padding:48px 56px 120px;
+    min-height:100vh;
+  }
+  body::before{
+    content:"";
+    position:fixed;inset:0;
+    background:linear-gradient(transparent 50%, rgba(0,0,0,0.025) 50%);
+    background-size:100% 3px;
+    mix-blend-mode:multiply;
+    pointer-events:none;
+    z-index:9999;
+  }
+  a{color:inherit;text-decoration:none;}
+  pre{
+    font-family:inherit;
+    font-size:14px;
+    line-height:1.7;
+    margin:0;
+    white-space:pre;
+    overflow-x:auto;
+  }
+  /* ─── BANNER (SPEC, 4 lines only) ── */
+  .banner{margin-bottom:36px;position:relative;}
+  .banner .line{
+    display:block;
+    overflow:hidden;
+    white-space:pre;
+    clip-path:inset(0 100% 0 0);
+    animation:typeline 600ms steps(40) forwards;
+  }
+  .banner .l1{animation-delay:80ms;}
+  .banner .l2{animation-delay:680ms;}
+  .banner .l3{animation-delay:1280ms;}
+  .banner .l4{animation-delay:1880ms;}
+  @keyframes typeline{
+    from{clip-path:inset(0 100% 0 0);}
+    to  {clip-path:inset(0 0 0 0);}
+  }
+  /* ─── LAYOUT ─────────────────────── */
+  .grid{
+    display:grid;
+    grid-template-columns:300px 1fr;
+    gap:64px;
+    align-items:start;
+  }
+  @media (max-width:960px){
+    .grid{grid-template-columns:1fr;gap:32px;}
+    body{padding:32px 24px 96px;}
+  }
+  /* ─── SIDEBAR ────────────────────── */
+  aside.nav{
+    position:sticky;
+    top:32px;
+    align-self:start;
+  }
+  .nav .group{margin-bottom:18px;}
+  .nav .ghead{
+    cursor:pointer;
+    user-select:none;
+    transition:color 150ms ease, transform 150ms ease;
+    display:inline-block;
+  }
+  .nav .ghead:hover{color:var(--accent);transform:translateX(4px);}
+  .nav .gbody{
+    overflow:hidden;
+    max-height:0;
+    transition:max-height 300ms ease-out;
+  }
+  .nav .gbody.open{max-height:1200px;}
+  .nav .row{
+    padding-left:8px;
+    cursor:pointer;
+    transition:color 150ms ease, transform 150ms ease;
+    display:block;
+  }
+  .nav .row:hover{color:var(--accent);transform:translateX(4px);}
+  .nav .row.active{color:var(--accent);}
+  .nav .alpha{display:inline-block;width:2ch;color:var(--muted);}
+  .nav .bracket{display:inline-block;width:3ch;}
+  .nav .row.active .bracket{color:var(--accent);}
+  /* ─── MAIN ───────────────────────── */
+  main{max-width:820px;}
+  main section{
+    margin-bottom:48px;
+    opacity:0;
+    transform:translateY(12px);
+    transition:opacity 400ms ease-out, transform 400ms ease-out;
+    scroll-margin-top:24px;
+  }
+  main section.visible{opacity:1;transform:translateY(0);}
+  main section:first-child{opacity:1;transform:none;}
+  main .shead{display:block;margin-bottom:8px;}
+  main .rule{color:var(--rule);display:block;margin-bottom:18px;}
+  main p{margin:0 0 14px;}
+  main .muted{color:var(--muted);}
+  main .quote{color:var(--muted);margin:14px 0;}
+  main .quote::before{content:">> ";color:var(--muted);}
+  main .ascii{margin:14px 0 18px;color:var(--fg);}
+  main .ascii .h{color:var(--muted);}
+  main .tag{color:var(--muted);}
+  main .hit{color:var(--accent);}
+  /* ─── FOOTER PROMPT ──────────────── */
+  footer.prompt{margin-top:64px;color:var(--fg);}
+  .cursor{
+    display:inline-block;
+    width:1ch;
+    background:var(--fg);
+    color:var(--bg);
+    animation:blink 1s steps(2) infinite;
+  }
+  @keyframes blink{0%,49%{opacity:1;} 50%,100%{opacity:0;}}
+  /* ─── ACCENT SWITCHER (inline in banner, scrolls away with content) ─── */
+  .accent-switch{
+    position:absolute;
+    top:0;
+    right:0;
+    font-family:inherit;
+    font-size:14px;
+    line-height:1.7;
+    color:var(--fg);
+    display:flex;
+    gap:10px;
+    align-items:center;
+    background:transparent;
+  }
+  .accent-switch .label{color:var(--muted);margin-right:4px;}
+  .accent-switch .opt{
+    cursor:pointer;
+    user-select:none;
+    transition:color 150ms ease, transform 150ms ease;
+    white-space:nowrap;
+  }
+  .accent-switch .opt:hover{color:var(--accent);transform:translateX(2px);}
+  .accent-switch .opt.active{color:var(--accent);}
+  .accent-switch .mark{display:inline-block;width:3ch;}
+  @media (max-width:600px){
+    .accent-switch{position:static;margin-top:12px;}
+  }
+  /* print */
+  @media print{
+    body::before{display:none;}
+    aside.nav{display:none;}
+    .accent-switch{display:none;}
+    .grid{display:block;}
+    body{padding:24px;}
+  }
+</style>
+</head>
+<body>
+
+<header class="banner" aria-label="document spec">
+<pre class="line l1">DOC     : iPhone &amp; Google · Computational Photography Timeline</pre>
+<pre class="line l2">DATE    : 2026-06-29</pre>
+<pre class="line l3">AUTHOR  : fanzhikang</pre>
+<pre class="line l4">VER     : 1.0.4</pre>
+<div class="accent-switch" role="group" aria-label="accent color">
+  <span class="label">ACCENT</span>
+  <a class="opt active" data-accent="#c8462c"><span class="mark">[•]</span>RED</a>
+  <a class="opt" data-accent="#2c6fc8"><span class="mark">[ ]</span>BLUE</a>
+  <a class="opt" data-accent="#3a8a4a"><span class="mark">[ ]</span>GREEN</a>
+</div>
+</header>
+
+<div class="grid">
+
+<!-- ─── SIDEBAR ─── -->
+<aside class="nav" aria-label="navigation">
+
+<div class="group">
+  <span class="ghead" data-toggle>[-]CONTENTS</span>
+  <div class="gbody open">
+    <a class="row anchor" data-anchor="prologue"><span class="bracket">[ ]</span>00 序章</a>
+    <a class="row anchor" data-anchor="era1">    <span class="bracket">[ ]</span>01 第一时代 · HDR 黎明</a>
+    <a class="row anchor" data-anchor="era2">    <span class="bracket">[ ]</span>02 第二时代 · 神经网络转折</a>
+    <a class="row anchor" data-anchor="era3">    <span class="bracket">[ ]</span>03 第三时代 · 夜景与融合</a>
+    <a class="row anchor" data-anchor="era4">    <span class="bracket">[ ]</span>04 第四时代 · SoC 与生成式</a>
+    <a class="row anchor" data-anchor="diverge"> <span class="bracket">[ ]</span>05 分叉</a>
+    <a class="row anchor" data-anchor="take">    <span class="bracket">[ ]</span>06 三条要点</a>
+    <a class="row anchor" data-anchor="refs">    <span class="bracket">[ ]</span>07 参考资料</a>
+  </div>
+</div>
+
+</aside>
+
+<!-- ─── MAIN ─── -->
+<main>
+
+<section id="prologue">
+<pre class="shead"># 00_序章</pre>
+<pre class="rule">────────────────────────────────────────────────────────────────────────</pre>
+<p>这份文档把 2010 至 2025 年间，iPhone 与 Google 两条主线在手机计算摄影上的关键里程碑放到同一时间轴上。两家公司常被并列，但它们对"一张好照片"的定义并不一致——Apple 把传感器、ISP、Neural Engine 当成一条紧耦合的硬件管线来调；Google 把单帧 RAW 当成原料，把"算"这件事当成主菜，并且把同一套算法逐年下放到更低端的机型。</p>
+<p>四个时代被人为切了出来。切割的依据是技术范式发生了非连续的变化，而不是营销节点。</p>
+<p class="quote">"Don't take a picture, compute a picture."  ── Marc Levoy, 2014</p>
+</section>
+
+<section id="era1">
+<pre class="shead"># 01_第一时代 · HDR 黎明 · 2010 — 2015</pre>
+<pre class="rule">────────────────────────────────────────────────────────────────────────</pre>
+<p>这一时期的关键词是"包围曝光 + 单帧合成"。手机第一次承认了一个事实：单次曝光的动态范围装不下真实世界。</p>
+<pre class="ascii">
+<span class="h">YEAR  PLATFORM         MILESTONE                          TAG</span>
+2010  iPhone 4         <span class="hit">Built-in HDR</span> (3-frame bracket)   <span class="tag">#hdr</span>
+2012  iPhone 5         A6 ISP，Auto-HDR 默认开启           <span class="tag">#hdr</span>
+2013  Nexus 5          <span class="hit">HDR+ v1</span> (Marc Levoy, Gcam)        <span class="tag">#hdrplus #burst</span>
+2014  iPhone 6         Focus Pixels (PDAF on sensor)      <span class="tag">#dualpixel</span>
+2014  Nexus 6          HDR+ 默认化，多帧对齐+平均           <span class="tag">#alignment #denoise</span>
+2015  iPhone 6s        Live Photo (1.5s 视频包裹一帧)       <span class="tag">#burst</span>
+</pre>
+<p>Google 在 2013 年的拐点常被低估。Gcam 团队在 Nexus 5 上把"先连拍十几帧短曝光、再对齐、再像素级加权平均"这一套做成了默认拍照通路。它解决的不只是动态范围，更是低光噪声——因为短曝光天然不会过曝亮部，而对齐后的多帧均值天然降噪。这条思路统治了之后十年。</p>
+<p>Apple 同期更关心传感器本身：Focus Pixels 让 PDAF 进入消费手机，对后来的人像景深与视频追焦都是基建。</p>
+</section>
+
+<section id="era2">
+<pre class="shead"># 02_第二时代 · 神经网络转折 · 2016 — 2018</pre>
+<pre class="rule">────────────────────────────────────────────────────────────────────────</pre>
+<p>两条主线第一次在"神经网络进相机管线"这件事上正面相遇。Apple 走双摄硬件路线；Google 走单摄+语义分割路线。两边都拿到了"人像模式"这个交付物，但底层逻辑完全不同。</p>
+<pre class="ascii">
+<span class="h">YEAR  PLATFORM         MILESTONE                          TAG</span>
+2016  Pixel 1          HDR+ 升级到 Burst Photography       <span class="tag">#burst #hdrplus</span>
+2016  iPhone 7 Plus    <span class="hit">双摄硬件景深</span> 人像模式             <span class="tag">#portrait</span>
+2017  iPhone 8 / X     Portrait Lighting (A11 Neural Eng) <span class="tag">#portrait #semantic</span>
+2017  Pixel 2          <span class="hit">单摄人像</span> (Dual Pixel + CNN seg)    <span class="tag">#dualpixel #portrait</span>
+2017  Pixel 2          Pixel Visual Core (首颗自研 ISP)     <span class="tag">#hdrplus</span>
+2018  iPhone XS        Smart HDR (4 帧零延迟缓冲)           <span class="tag">#hdr #burst</span>
+2018  Pixel 3          Top Shot / Super Res Zoom          <span class="tag">#superres #burst</span>
+2018  Pixel 3          <span class="hit">Night Sight</span> (长曝多帧, 端上去模糊)   <span class="tag">#nightsight</span>
+</pre>
+<p>Pixel 2 的单摄人像是这段时期最有教学价值的一个：它没有依赖第二颗摄像头测距，而是用 Dual Pixel 的左右半像素视差，再叠一个 CNN 分割图，把"人像景深"做成了纯算法问题。结果是同样的算法可以装进任何手机，不需要硬件改动。</p>
+<p>Apple 同期更倾向把语义信息留给后期——Portrait Lighting 把人脸 mesh 当作 3D 光照基底，Smart HDR 把零快门延迟做成默认。两家都对，但选了不同的耦合层。</p>
+</section>
+
+<section id="era3">
+<pre class="shead"># 03_第三时代 · 夜景与融合 · 2019 — 2021</pre>
+<pre class="rule">────────────────────────────────────────────────────────────────────────</pre>
+<p>当 Night Sight 在 2018 年底击穿了"手机不能拍夜景"的认知之后，Apple 不得不跟。iPhone 11 的 Night mode 与 Deep Fusion 是 Apple 第一次公开把"多帧+神经网络"作为默认管线讲出来。</p>
+<pre class="ascii">
+<span class="h">YEAR  PLATFORM         MILESTONE                          TAG</span>
+2019  iPhone 11        Night mode (类 Night Sight)         <span class="tag">#nightmode</span>
+2019  iPhone 11        <span class="hit">Deep Fusion</span> (9 帧像素级融合)       <span class="tag">#deepfusion #fusion</span>
+2019  Pixel 4          Live HDR+ &amp; Dual Exposure           <span class="tag">#hdrplus</span>
+2019  Pixel 4          Astrophotography (16×15s 长曝)      <span class="tag">#nightsight</span>
+2020  iPhone 12 Pro    <span class="hit">ProRAW</span> (DNG + 计算管线元数据)      <span class="tag">#proraw</span>
+2020  Pixel 5          Portrait Light (relighting 后期)    <span class="tag">#portrait</span>
+2021  iPhone 13        Photographic Styles (语义局部调色)    <span class="tag">#styles #semantic</span>
+2021  iPhone 13        Cinematic mode (视频景深+焦点切换)    <span class="tag">#portrait</span>
+2021  Pixel 6          <span class="hit">Tensor SoC</span> (首颗自研 SoC)          <span class="tag">#hdrplus</span>
+2021  Pixel 6          Magic Eraser / Real Tone / Motion   <span class="tag">#magiceraser #genai</span>
+</pre>
+<p>ProRAW 是个被低估的产品决策。它没让算法消失，而是把"算到一半的图"以可逆元数据的形式留给摄影师——后期能拉回的不是死的 JPEG，而是已经做完多帧降噪与对齐之后的高位深 DNG。Apple 第一次把"计算"和"原片"调和在一起。</p>
+<p>Pixel 6 的 Tensor 不只是省电，它把"端上跑 CNN 做 segmentation 与人脸"从需要专门 ISP 协处理器变成了 SoC 自带能力，这为后面 Magic Eraser、Best Take、Magic Editor 这一连串生成式编辑铺了路。Real Tone 则是工程之外的一件事——它承认了肤色调色长期偏向白皮肤这一历史问题。</p>
+</section>
+
+<section id="era4">
+<pre class="shead"># 04_第四时代 · SoC 与生成式 · 2022 — 2025</pre>
+<pre class="rule">────────────────────────────────────────────────────────────────────────</pre>
+<p>这一阶段两条线开始本质性地分叉。Apple 把神经引擎与 ISP 进一步绑死在自家 SoC，强调"按下快门那一瞬间的真实"；Google 用 Tensor 把生成式模型搬上手机，强调"拍完之后还可以重新决定真实"。</p>
+<pre class="ascii">
+<span class="h">YEAR  PLATFORM         MILESTONE                          TAG</span>
+2022  iPhone 14 Pro    <span class="hit">Photonic Engine</span> (前置在 demosaic) <span class="tag">#photonicengine #fusion</span>
+2022  iPhone 14 Pro    48MP main + 像素四合一               <span class="tag">#fusion</span>
+2022  Pixel 7          Photo Unblur (CNN 反卷积)            <span class="tag">#denoise #genai</span>
+2022  Pixel 7 Pro      Cinematic Blur + Super Res Zoom 30× <span class="tag">#superres #portrait</span>
+2023  iPhone 15 Pro    默认 24MP (12+48 多档融合)           <span class="tag">#fusion</span>
+2023  iPhone 15 Pro    语义切片决定每张照片的处理强度        <span class="tag">#semantic</span>
+2023  Pixel 8 / Pro    <span class="hit">Best Take</span> (多帧脸部择优合成)       <span class="tag">#besttake #genai</span>
+2023  Pixel 8 Pro      Magic Editor (扩散模型局部重绘)      <span class="tag">#reimagine #genai</span>
+2023  Pixel 8 Pro      Video Boost (云端 HDR+ for video)   <span class="tag">#fusion</span>
+2024  iPhone 16 Pro    Camera Control (硬件快门按键)        <span class="tag">#styles</span>
+2024  iPhone 16 Pro    Photographic Styles v2 (可逆套用)    <span class="tag">#styles #semantic</span>
+2024  Pixel 9 Pro      Add Me / Reimagine / Auto Frame     <span class="tag">#genai #reimagine</span>
+2025  Pixel 10 Pro     Camera Coach (LLM 教学构图)          <span class="tag">#genai</span>
+</pre>
+<p>Photonic Engine 在管线上的位置改得很激进——它把 Deep Fusion 从"JPEG 已经走完一半之后再来抢救"挪到了"还没 demosaic、还是高动态范围线性数据"的早期阶段。这件事看不到也讲不清楚，但夜景里的高光保留度肉眼可见地变了。</p>
+<p>Pixel 8 Pro 的 Magic Editor 跨过了一个心理门槛：它不再只是"擦掉路人"，而是"换天换光换姿势"。Best Take 把"全家福里总有人闭眼"这件事改成了非问题——它合成的是一张从未真实发生过的照片。这是关于"摄影是不是记录"的边界。</p>
+<p class="quote">"Photography used to be about choosing the moment. Now the moment chooses you, and the rest is a slider."</p>
+</section>
+
+<section id="diverge">
+<pre class="shead"># 05_分叉  ·  两种"真实"</pre>
+<pre class="rule">────────────────────────────────────────────────────────────────────────</pre>
+<p>把 15 年的里程碑压平之后，两家公司的世界观差异比硬件参数表上看到的更彻底。这不是营销立场，是工程取舍。</p>
+
+<pre class="ascii">
+<span class="h"># 同一束光，两条管线</span>
+─────────────────────────────────────────────────────────────────────
+                          ┌─────────────────┐
+                          │   现实场景 / 光   │
+                          └────────┬────────┘
+                                   │
+                          ┌────────┴────────┐
+                          │  CMOS 传感器 RAW  │
+                          └────────┬────────┘
+                                   │
+                  ┌────────────────┴────────────────┐
+                  ▼                                 ▼
+       ┌────────────────────┐            ┌────────────────────┐
+       │  Apple · iPhone    │            │  Google · Pixel    │
+       └─────────┬──────────┘            └─────────┬──────────┘
+                 │                                 │
+                 ▼                                 ▼
+       ┌────────────────────┐            ┌────────────────────┐
+       │ Photonic Engine    │            │  HDR+ Burst (4-15) │
+       │ (pre-demosaic 融合) │            │  对齐 + 加权均值     │
+       └─────────┬──────────┘            └─────────┬──────────┘
+                 │                                 │
+                 ▼                                 ▼
+       ┌────────────────────┐            ┌────────────────────┐
+       │  Neural Engine     │            │   Tensor SoC       │
+       │  语义切片 / 调色     │            │  分割 / 反卷积       │
+       └─────────┬──────────┘            └─────────┬──────────┘
+                 │                                 │
+                 ▼                                 ▼
+       ┌════════════════════┐            ┌════════════════════┐
+       ║   ProRAW (DNG)     ║            ║   Magic Editor     ║
+       ║  可逆元数据 · 记录    ║            ║  扩散重绘 · 完善     ║
+       └════════════════════┘            └════════════════════┘
+</pre>
+
+<p>两条管线的分歧点不在末端的"是否生成式"，而在中段——Apple 把"融合"塞进了 demosaic 之前的线性 RAW 域，Google 把"融合"留在了 demosaic 之后的 sRGB 域。看似细微，却决定了高光保留度、噪声纹理、可后期空间这三件长期看才显著的事。</p>
+
+<pre class="ascii">
+                    iPhone (Apple)              Pixel (Google)
+                    ─────────────────           ─────────────────
+PRIMITIVE         · sensor frame              · burst of frames
+FUSION_STAGE      · pre-demosaic (Photonic)   · post-demosaic (HDR+)
+SEMANTIC_ROLE     · local tonemap / styles    · subject re-composition
+EDITABILITY       · ProRAW (可逆元数据)         · Magic Editor (生成式重绘)
+HARDWARE_BIAS     · SoC + Neural Engine 紧耦合 · Tensor + 云端协同 (Video Boost)
+ETHOS             · "记录此刻"                 · "完善此刻"
+DEFAULT_USER      · 摄影师 / 普通用户的中间态     · 普通用户 / 不会构图的也能交付
+</pre>
+<p>没有谁在道德上更正确。Apple 路线的代价是创新看上去更慢，因为大部分进步发生在管线深处而不是 UI 上；Google 路线的代价是越来越难回答"这张照片真的发生过吗"。</p>
+</section>
+
+<section id="take">
+<pre class="shead"># 06_三条要点</pre>
+<pre class="rule">────────────────────────────────────────────────────────────────────────</pre>
+<p>三条可以带走的观察。</p>
+<pre class="ascii">
+[1] 计算摄影的真正分水岭不是夜景，而是 <span class="hit">2013 年 HDR+</span>。
+    "把单帧当成一份待去噪的样本"这个范式一旦确立，所有后续
+    动作（Night Sight / Deep Fusion / Photonic Engine / Best
+    Take）都是它的扩展，而不是革新。
+
+[2] 神经网络进入相机的真正窗口是 <span class="hit">2017 — 2018</span>，由 Pixel 2
+    单摄人像与 iPhone X 的 A11 NE 共同打开。在那之前 ML
+    是后处理；之后 ML 是管线本身。
+
+[3] 2023 年之后，"计算"的边界从 <span class="hit">补救</span> 滑向 <span class="hit">生成</span>。Best
+    Take、Magic Editor、Add Me 这些功能解决的不再是物理
+    问题，而是人类社交需求——它们承认了一件事：人们不需要
+    一张真实的照片，他们需要一张"应该是这样的"照片。
+</pre>
+<p class="quote">下一步值得追问的不是"分辨率/夜景能到多好"，而是"端上扩散模型默认开启之后，什么还算照片"。</p>
+</section>
+
+<section id="refs">
+<pre class="shead"># 07_参考资料</pre>
+<pre class="rule">────────────────────────────────────────────────────────────────────────</pre>
+<p>原厂第一手资料，优先于二手综述。</p>
+<pre class="ascii">
+[↗] <a href="https://blog.research.google/2014/10/hdr-low-light-and-high-dynamic-range.html" target="_blank" rel="noopener">Google HDR+ — HDR, Low-light &amp; High Dynamic Range</a>
+[↗] <a href="https://blog.research.google/2017/04/portrait-mode-on-pixel-2-and-pixel-2-xl.html" target="_blank" rel="noopener">Portrait Mode on Pixel 2 / Pixel 2 XL</a>
+[↗] <a href="https://blog.research.google/2018/11/night-sight-seeing-in-dark-on-pixel.html" target="_blank" rel="noopener">Night Sight: Seeing in the Dark on Pixel</a>
+[↗] <a href="https://machinelearning.apple.com/research/panoptic-segmentation" target="_blank" rel="noopener">Apple ML Research — Panoptic Segmentation</a>
+</pre>
+</section>
+
+<footer class="prompt">
+<pre>$ cat doc.md | wc -l</pre>
+<pre>$ <span class="cursor">&nbsp;</span></pre>
+</footer>
+
+</main>
+</div>
+
+<script>
+  // ─── sidebar collapse ────────────────────────────────
+  document.querySelectorAll('[data-toggle]').forEach(function(h){
+    var body = h.parentElement.querySelector('.gbody');
+    function setState(open){
+      if(open){
+        body.classList.add('open');
+        h.textContent = h.textContent.replace('[+]','[-]');
+      }else{
+        body.classList.remove('open');
+        h.textContent = h.textContent.replace('[-]','[+]');
+      }
+    }
+    h.setAttribute('tabindex','0');
+    h.addEventListener('click', function(){ setState(!body.classList.contains('open')); });
+    h.addEventListener('keydown', function(e){
+      if(e.key==='Enter'||e.key===' '){ e.preventDefault(); setState(!body.classList.contains('open')); }
+    });
+  });
+
+  // ─── anchor jump (NO check-state mutation) ───────────
+  document.querySelectorAll('.nav .row.anchor').forEach(function(r){
+    r.setAttribute('tabindex','0');
+    function jump(){
+      var id = r.getAttribute('data-anchor');
+      var el = document.getElementById(id);
+      if(el){
+        var y = el.getBoundingClientRect().top + window.pageYOffset - 24;
+        window.scrollTo({top:y, behavior:'smooth'});
+      }
+    }
+    r.addEventListener('click', jump);
+    r.addEventListener('keydown', function(e){
+      if(e.key==='Enter'||e.key===' '){ e.preventDefault(); jump(); }
+    });
+  });
+
+  // ─── section reveal on scroll ────────────────────────
+  var revealIO = new IntersectionObserver(function(entries){
+    entries.forEach(function(en){
+      if(en.isIntersecting){
+        en.target.classList.add('visible');
+        revealIO.unobserve(en.target);
+      }
+    });
+  },{threshold:0.08});
+  document.querySelectorAll('main section').forEach(function(s){ revealIO.observe(s); });
+
+  // ─── scrollspy: [•] tracks the section currently in view ─
+  var sections = Array.prototype.slice.call(document.querySelectorAll('main section'));
+  var anchorMap = {};
+  document.querySelectorAll('.nav .row.anchor').forEach(function(r){
+    anchorMap[r.getAttribute('data-anchor')] = r;
+  });
+  function setActive(id){
+    Object.keys(anchorMap).forEach(function(k){
+      var row = anchorMap[k];
+      var b = row.querySelector('.bracket');
+      if(k === id){
+        row.classList.add('active');
+        if(b) b.textContent = '[•]';
+      }else{
+        row.classList.remove('active');
+        if(b) b.textContent = '[ ]';
+      }
+    });
+  }
+  function updateSpy(){
+    // pick the section whose top is closest to (but not past) viewport top + offset
+    var probe = window.innerHeight * 0.28;
+    var current = sections[0].id;
+    for(var i=0;i<sections.length;i++){
+      var rect = sections[i].getBoundingClientRect();
+      if(rect.top - probe <= 0){
+        current = sections[i].id;
+      }else{
+        break;
+      }
+    }
+    setActive(current);
+  }
+  window.addEventListener('scroll', updateSpy, {passive:true});
+  window.addEventListener('resize', updateSpy);
+  updateSpy();
+
+  // ─── accent color switcher ───────────────────────────
+  var accentOpts = document.querySelectorAll('.accent-switch .opt');
+  accentOpts.forEach(function(o){
+    o.setAttribute('tabindex','0');
+    function activate(){
+      document.documentElement.style.setProperty('--accent', o.dataset.accent);
+      accentOpts.forEach(function(x){
+        x.classList.remove('active');
+        var m = x.querySelector('.mark');
+        if(m) m.textContent = '[ ]';
+      });
+      o.classList.add('active');
+      var mark = o.querySelector('.mark');
+      if(mark) mark.textContent = '[•]';
+    }
+    o.addEventListener('click', activate);
+    o.addEventListener('keydown', function(e){
+      if(e.key==='Enter'||e.key===' '){ e.preventDefault(); activate(); }
+    });
+  });
+</script>
+</body>
+</html>
